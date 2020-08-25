@@ -1,4 +1,4 @@
-# Character Guesse
+# Character Guesser
 
 In this game, the application try guessing which character you thought. In negative case you can provide for it information to, on next time, it learns and do not make the same mistake.
 
