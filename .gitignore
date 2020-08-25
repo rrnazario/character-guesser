@@ -28,3 +28,6 @@
 /src/CharacterGuesser.Infra/obj
 /src/.vs/CharacterGuesser/DesignTimeBuild
 /src/.vs/CharacterGuesser/v16
+/src/CharacterGuesser/bin/Release
+/src/CharacterGuesser.Domain/bin/Release/netcoreapp3.1
+/src/CharacterGuesser.Infra/bin/Release/netcoreapp3.1
