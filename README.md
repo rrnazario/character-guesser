@@ -4,7 +4,7 @@ In this game, the application try guessing which character you thought. In negat
 
 ## Download
 
-There is a executable version [here](https://www.dropbox.com/s/lo5kpktraf5l66v/CharacterGuesser.zip?dl=1).
+There is an executable version [here](https://www.dropbox.com/s/lo5kpktraf5l66v/CharacterGuesser.zip?dl=1).
 
 ## To build/modify
 
