@@ -121,8 +121,7 @@
     <value>Qual personagem pensou?</value>
   </data>
   <data name="Questioning" xml:space="preserve">
-    <value>O personagem que você pensou é {0} ?</value>
-    <comment> </comment>
+    <value>O personagem que você pensou é {0} ? (Pressione 'S' para Sim ou 'N' para não)</value>
   </data>
   <data name="ThinkDiffers" xml:space="preserve">
     <value>{0} é _____ mas {1} não.</value>

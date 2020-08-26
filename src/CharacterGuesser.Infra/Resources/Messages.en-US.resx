@@ -121,7 +121,7 @@
     <value>What character did you think?</value>
   </data>
   <data name="Questioning" xml:space="preserve">
-    <value>The character which you thought is {0} ?</value>
+    <value>The character which you thought is {0} ? (Press 'S' to YES or 'N' to NO):</value>
   </data>
   <data name="ThinkDiffers" xml:space="preserve">
     <value>{0} is _____, but {1} is not.</value>

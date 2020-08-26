@@ -29,9 +29,12 @@ namespace CharacterGuesser.Domain.Entities
             Reset();
         }
 
-        public Game(CultureInfo cultureInfo) : base()
+        public Game(CultureInfo cultureInfo)
         {
             ResourceHelper.SetCulture(cultureInfo);
+
+            Load();
+            Reset();
         }
         public void Reset()
         {

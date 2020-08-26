@@ -7,7 +7,7 @@ namespace CharacterGuesser.Presentation
     {
         static void Main(string[] args)
         {
-            IGame game = new Game();
+            IGame game = new Game(new System.Globalization.CultureInfo("en-US"));
 
             game.Play();
         }
