@@ -65,6 +65,17 @@ namespace CharacterGuesser.Domain.Entities
                 if (key.Key != ConsoleKey.S && key.Key != ConsoleKey.N)
                     continue;
 
+                if (CurrentQuestion.IsLeaf())
+                {
+                    
+                    
+                    Reset();
+                }
+                else
+                {
+
+                }
+
                 if (key.Key == ConsoleKey.S)
                 {
                     //If there are not childrens for current question, this is final answear

@@ -1,5 +1,8 @@
 ﻿using CharacterGuesser.Domain.Entities;
 using CharacterGuesser.Domain.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Linq;
 
 namespace CharacterGuesser.Presentation
 {
@@ -7,9 +10,11 @@ namespace CharacterGuesser.Presentation
     {
         static void Main(string[] args)
         {
-            IGame game = new Game(new System.Globalization.CultureInfo("en-US"));
+            var game = new GameSimpler();
+            //IGame game = new Game(new System.Globalization.CultureInfo("en-US"));
 
-            game.Play();
+            game.Play();            
         }
+
     }
 }
