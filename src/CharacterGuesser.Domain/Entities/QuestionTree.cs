@@ -50,6 +50,8 @@ namespace CharacterGuesser.Domain.Entities
             if (key != ConsoleKey.S && key != ConsoleKey.N)
                 return this;
 
+            Console.Clear();
+
             switch (key)
             {
                 case ConsoleKey.S:
