@@ -74,5 +74,16 @@
         /// <param name="text"></param>
         /// <returns></returns>
         IQuestionTree Find(string text);
+
+        /// <summary>
+        /// Add new question based on user input.
+        /// </summary>
+        void AddQuestion();
+
+        /// <summary>
+        /// Obtain next question based on user actions.
+        /// </summary>
+        /// <returns></returns>
+        IQuestionTree GetNextQuestion();
     }
 }

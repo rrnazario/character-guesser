@@ -20,37 +20,19 @@ namespace CharacterGuesser.Domain.Entities
         /// </summary>
         public IQuestionTree CurrentQuestion { get; set; }
 
-        const string QuestionDatabase = "questions.txt";
-
-        public Game()
-        {
-            Load();
-
-            Reset();
-        }
+        public Game() => Load();
 
         public Game(CultureInfo cultureInfo)
         {
             ResourceHelper.SetCulture(cultureInfo);
 
             Load();
-            Reset();
-        }
-        public void Reset()
-        {
-            //Reset the tree
-            CurrentQuestion = CurrentQuestion.First();
-
-            Console.Clear();
-            Console.WriteLine(ResourceHelper.GetString("ThinkMessage"));
-            Thread.Sleep(new TimeSpan(0, 0, 2));
         }
 
         public void Play()
         {
-            //To control singular and plural on success message.
-            bool moreThanOnceSuccess = false;
-
+            ConsoleHelper.ResetScreen();
+            
             //The game runs forever until user closes the window.
             while (true)
             {
@@ -59,95 +41,15 @@ namespace CharacterGuesser.Domain.Entities
                 //Print current question.
                 Console.Write(CurrentQuestion);
 
-                var key = Console.ReadKey();
-
-                //Only accepting Yes or No
-                if (key.Key != ConsoleKey.S && key.Key != ConsoleKey.N)
-                    continue;
-
-                if (key.Key == ConsoleKey.S)
-                {
-                    //If there are not childrens for current question, this is final answear
-                    if (CurrentQuestion.IsLeaf())
-                    {
-                        Console.WriteLine($"\n{(!moreThanOnceSuccess ? MessageConstants.SUCCESS_MESSAGE_FIRST_TIME : MessageConstants.SUCCESS_MESSAGE)}");
-                        Console.ReadKey();
-
-                        moreThanOnceSuccess = true;
-
-                        Reset();
-                    }
-                    else
-                        CurrentQuestion = CurrentQuestion.GetPositiveQuestion();
-                }
-                else
-                {
-                    if (CurrentQuestion.IsLeaf())
-                    {
-                        Learn();
-                        Reset();
-                    }
-                    else
-                        CurrentQuestion = CurrentQuestion.GetNegativeQuestion();
-                }
+                CurrentQuestion = CurrentQuestion.GetNextQuestion();
             }
         }
 
-        public void Learn()
+        private void Load()
         {
-            Console.Write($"\n\n{ResourceHelper.GetString("LearningWhat")} {MessageConstants.SUFIX_ENTER_MESSAGE}");
-
-            var newPlate = ConsoleHelper.ReadWholeWord();
-
-            Console.Write(string.Format(ResourceHelper.GetString("ThinkDiffers"), newPlate, CurrentQuestion.GetText()) + $"{MessageConstants.SUFIX_ENTER_MESSAGE}");
-            var differenceBetweenLastPlate = ConsoleHelper.ReadWholeWord();
-
-            //Creating new question
-            IQuestionTree newPlateQuestion = QuestionFactory.CreateQuestion(differenceBetweenLastPlate, CurrentQuestion.GetParent());
-            newPlateQuestion.SetPositiveQuestion(newPlate);
-
-            //Setting old parent to point to this newest question
-            if (CurrentQuestion.GetParent().GetPositiveQuestion().Equals(CurrentQuestion))
-                CurrentQuestion.GetParent().SetPositiveQuestion(newPlateQuestion);
-            else
-                CurrentQuestion.GetParent().SetNegativeQuestion(newPlateQuestion);
-
-            //The new node negative question must pointing to current question.
-            newPlateQuestion.SetNegativeQuestion(CurrentQuestion);
-
-            //Save to file
-            Save();
-        }
-
-        public void Save()
-        {
-            var file = new List<string>();
-
-            var saveNode = CurrentQuestion.First();
-            file.Add($"{saveNode.GetText()}|{saveNode.GetPositiveQuestion()?.GetText()}|{saveNode.GetNegativeQuestion()?.GetText()}");
-
-            var rightNode = saveNode.GetPositiveQuestion();
-            while (rightNode != null)
+            if (File.Exists(GeneralConstants.QUESTION_DATABASE))
             {
-                file.Add($"{rightNode.GetText()}|{rightNode.GetPositiveQuestion()?.GetText()}|{rightNode.GetNegativeQuestion()?.GetText()}");
-                rightNode = rightNode.GetPositiveQuestion();
-            }
-
-            var leftNode = saveNode.GetNegativeQuestion();
-            while (leftNode != null)
-            {
-                file.Add($"{leftNode.GetText()}|{leftNode.GetPositiveQuestion()?.GetText()}|{leftNode.GetNegativeQuestion()?.GetText()}");
-                leftNode = leftNode.GetNegativeQuestion();
-            }
-
-            File.WriteAllLines(QuestionDatabase, file);
-        }
-
-        public void Load()
-        {
-            if (File.Exists(QuestionDatabase))
-            {
-                var questions = File.ReadAllLines(QuestionDatabase);
+                var questions = File.ReadAllLines(GeneralConstants.QUESTION_DATABASE);
 
                 foreach (var question in questions)
                 {
@@ -178,6 +80,9 @@ namespace CharacterGuesser.Domain.Entities
                 CurrentQuestion.SetPositiveQuestion("Thor");
                 CurrentQuestion.SetNegativeQuestion("Hulk");
             }
+
+            //Reset the tree
+            CurrentQuestion = CurrentQuestion.First();
         }
     }
 }
