@@ -46,40 +46,28 @@ namespace CharacterGuesser.Domain.Entities
         {
             var key = Console.ReadKey().Key;
 
-            //Only accepting Yes or No
-            if (key != ConsoleKey.S && key != ConsoleKey.N)
-                return this;
-
             Console.Clear();
 
-            switch (key)
+            //Only accepting Yes or No
+            if (key != ConsoleKey.S && key != ConsoleKey.N)
+                return this;            
+
+            if (IsLeaf())
             {
-                case ConsoleKey.S:
-                    if (IsLeaf())
-                    {
-                        Console.WriteLine($"\n{MessageConstants.SUCCESS_MESSAGE_FIRST_TIME}");
-                        Console.ReadKey();
+                if (key == ConsoleKey.S)
+                {
+                    Console.WriteLine($"\n{MessageConstants.SUCCESS_MESSAGE_FIRST_TIME}");
+                    Console.ReadKey();
+                }
+                else
+                    AddQuestion();
 
-                        ConsoleHelper.ResetScreen();
+                ConsoleHelper.ResetScreen();
 
-                        return First();
-                    }
-                    else
-                        return GetPositiveQuestion();
-                case ConsoleKey.N:
-                    if (IsLeaf())
-                    {
-                        AddQuestion();
-
-                        ConsoleHelper.ResetScreen();
-
-                        return First();
-                    }
-                    else
-                        return GetNegativeQuestion();
-                default:
-                    return this;
+                return First();
             }
+            else
+                return key == ConsoleKey.S ? GetPositiveQuestion() : GetNegativeQuestion();
         }
 
         public void AddQuestion()
@@ -101,7 +89,7 @@ namespace CharacterGuesser.Domain.Entities
             else
                 GetParent().SetNegativeQuestion(newPlateQuestion);
 
-            //The new node negative question must pointing to current question.
+            //The new node negative question must pointing to the current question.
             newPlateQuestion.SetNegativeQuestion(this);
 
             //Save to file
