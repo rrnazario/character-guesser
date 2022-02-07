@@ -51,7 +51,7 @@ namespace CharacterGuesser.Domain.Factories
         {
             var CurrentQuestion = CreateQuestion("flyer");
 
-            CurrentQuestion.SetPositiveQuestion("Thor");
+            CurrentQuestion.SetPositiveQuestion("Iron-Man");
             CurrentQuestion.SetNegativeQuestion("Hulk");
 
             return CurrentQuestion.First();
